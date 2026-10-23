@@ -1,0 +1,260 @@
+root = true
+
+# ============================================================
+# Unity + Visual Studio + Roslyn + SonarQube for IDE
+# Team baseline .editorconfig
+#
+# Purpose:
+# - Consistent C# formatting and naming
+# - Roslyn / IDE diagnostics at warning level where supported
+# - No ReSharper-specific settings
+#
+# Notes:
+# - This file does not install analyzers.
+# - SonarQube for IDE rule severities are managed by SonarQube's
+#   supported configuration, not by assuming every Sxxxx rule
+#   can be controlled here.
+# - Unity-specific runtime performance must still be verified
+#   with Unity Profiler / Performance Testing.
+# ============================================================
+
+# ------------------------------------------------------------
+# 1. General file settings
+# ------------------------------------------------------------
+
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Keep CRLF for a Windows / Visual Studio-led team.
+# If the team works across Windows/macOS/Linux, consider LF and
+# configure .gitattributes consistently.
+
+# ------------------------------------------------------------
+# 2. C# formatting
+# ------------------------------------------------------------
+
+[*.cs]
+indent_style = space
+indent_size = 4
+tab_width = 4
+
+# using directives
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+csharp_using_directive_placement = outside_namespace
+
+# Braces and whitespace
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_around_binary_operators = before_and_after
+csharp_space_after_cast = false
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_parentheses = false
+csharp_space_after_comma = true
+csharp_space_before_comma = false
+csharp_space_after_semicolon_in_for_statement = true
+csharp_space_before_semicolon_in_for_statement = false
+
+# Keep existing single-line constructs if already present.
+# This affects formatting preference, not whether a construct is correct.
+csharp_preserve_single_line_blocks = true
+csharp_preserve_single_line_statements = true
+
+# ------------------------------------------------------------
+# 3. C# style preferences
+# Use warning for preferences the team wants to enforce.
+# Some options depend on the C# language version supported by Unity.
+# ------------------------------------------------------------
+
+# Explicit types rather than var (team preference)
+csharp_style_var_for_built_in_types = false:warning
+csharp_style_var_when_type_is_apparent = false:warning
+csharp_style_var_elsewhere = false:warning
+
+# Prefer block-scoped namespaces for broad Unity-version compatibility
+csharp_style_namespace_declarations = block_scoped:warning
+
+# Prefer block bodies for methods; expression-bodied properties are allowed
+csharp_style_expression_bodied_methods = false:warning
+csharp_style_expression_bodied_constructors = false:warning
+csharp_style_expression_bodied_operators = false:warning
+csharp_style_expression_bodied_properties = true:warning
+csharp_style_expression_bodied_indexers = true:warning
+csharp_style_expression_bodied_accessors = true:warning
+
+# Prefer explicit object creation type for readability / compatibility
+csharp_style_implicit_object_creation_when_type_is_apparent = false:warning
+
+# Prefer simple patterns where supported
+csharp_style_prefer_switch_expression = true:warning
+csharp_style_prefer_pattern_matching = true:warning
+csharp_style_prefer_not_pattern = true:warning
+csharp_style_prefer_extended_property_pattern = true:warning
+
+# Prefer braces for control-flow statements to reduce accidental logic errors
+csharp_prefer_braces = true:warning
+
+# ------------------------------------------------------------
+# 4. .NET style preferences
+# ------------------------------------------------------------
+
+# Avoid unnecessary this. qualification
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_event = false:warning
+
+# Prefer framework type names consistently
+dotnet_style_predefined_type_for_locals_parameters_members = true:warning
+dotnet_style_predefined_type_for_member_access = true:warning
+
+# Object / collection initializers and simplified expressions
+dotnet_style_object_initializer = true:warning
+dotnet_style_collection_initializer = true:warning
+dotnet_style_coalesce_expression = true:warning
+dotnet_style_null_propagation = true:warning
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
+dotnet_style_prefer_auto_properties = true:warning
+dotnet_style_require_accessibility_modifiers = always:warning
+
+# readonly suggestions for fields where applicable
+dotnet_style_readonly_field = true:warning
+
+# ------------------------------------------------------------
+# 5. Naming conventions
+# ------------------------------------------------------------
+
+# Naming styles
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+dotnet_naming_style.camel_case.capitalization = camel_case
+dotnet_naming_style.underscore_camel_case.required_prefix = _
+dotnet_naming_style.underscore_camel_case.capitalization = camel_case
+dotnet_naming_style.interface_style.required_prefix = I
+dotnet_naming_style.interface_style.capitalization = pascal_case
+dotnet_naming_style.async_method_style.required_suffix = Async
+dotnet_naming_style.async_method_style.capitalization = pascal_case
+
+# Types: class, struct, interface, enum, delegate -> PascalCase
+dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum, delegate
+dotnet_naming_rule.types_should_be_pascal_case.severity = warning
+dotnet_naming_rule.types_should_be_pascal_case.symbols = types
+dotnet_naming_rule.types_should_be_pascal_case.style = pascal_case
+
+# Interfaces -> IName
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+dotnet_naming_rule.interfaces_should_start_with_i.severity = warning
+dotnet_naming_rule.interfaces_should_start_with_i.symbols = interfaces
+dotnet_naming_rule.interfaces_should_start_with_i.style = interface_style
+
+# Methods, properties, events -> PascalCase
+dotnet_naming_symbols.methods.applicable_kinds = method
+dotnet_naming_rule.methods_should_be_pascal_case.severity = warning
+dotnet_naming_rule.methods_should_be_pascal_case.symbols = methods
+dotnet_naming_rule.methods_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_symbols.properties.applicable_kinds = property
+dotnet_naming_rule.properties_should_be_pascal_case.severity = warning
+dotnet_naming_rule.properties_should_be_pascal_case.symbols = properties
+dotnet_naming_rule.properties_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_symbols.events.applicable_kinds = event
+dotnet_naming_rule.events_should_be_pascal_case.severity = warning
+dotnet_naming_rule.events_should_be_pascal_case.symbols = events
+dotnet_naming_rule.events_should_be_pascal_case.style = pascal_case
+
+# Constants -> PascalCase
+dotnet_naming_symbols.constants.applicable_kinds = field
+dotnet_naming_symbols.constants.required_modifiers = const
+dotnet_naming_rule.constants_should_be_pascal_case.severity = warning
+dotnet_naming_rule.constants_should_be_pascal_case.symbols = constants
+dotnet_naming_rule.constants_should_be_pascal_case.style = pascal_case
+
+# Private fields -> _camelCase
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_rule.private_fields_should_be_underscore_camel_case.severity = warning
+dotnet_naming_rule.private_fields_should_be_underscore_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_underscore_camel_case.style = underscore_camel_case
+
+# Parameters and local variables -> camelCase
+dotnet_naming_symbols.parameters.applicable_kinds = parameter
+dotnet_naming_rule.parameters_should_be_camel_case.severity = warning
+dotnet_naming_rule.parameters_should_be_camel_case.symbols = parameters
+dotnet_naming_rule.parameters_should_be_camel_case.style = camel_case
+
+dotnet_naming_symbols.locals.applicable_kinds = local
+dotnet_naming_rule.locals_should_be_camel_case.severity = warning
+dotnet_naming_rule.locals_should_be_camel_case.symbols = locals
+dotnet_naming_rule.locals_should_be_camel_case.style = camel_case
+
+# Async methods -> PascalCase + Async suffix
+dotnet_naming_symbols.async_methods.applicable_kinds = method
+dotnet_naming_symbols.async_methods.required_modifiers = async
+dotnet_naming_rule.async_methods_should_end_with_async.severity = warning
+dotnet_naming_rule.async_methods_should_end_with_async.symbols = async_methods
+dotnet_naming_rule.async_methods_should_end_with_async.style = async_method_style
+
+# ------------------------------------------------------------
+# 6. Roslyn / IDE diagnostics
+# ------------------------------------------------------------
+
+# General default for enabled .NET analyzer diagnostics.
+# This may produce many warnings in legacy projects; tune after baseline scan.
+dotnet_analyzer_diagnostic.severity = warning
+
+# General code quality / style diagnostics commonly useful in C# projects.
+dotnet_diagnostic.IDE0005.severity = warning
+dotnet_diagnostic.IDE0007.severity = warning
+dotnet_diagnostic.IDE0009.severity = warning
+dotnet_diagnostic.IDE0011.severity = warning
+dotnet_diagnostic.IDE0028.severity = warning
+dotnet_diagnostic.IDE0031.severity = warning
+dotnet_diagnostic.IDE0034.severity = warning
+dotnet_diagnostic.IDE0044.severity = warning
+dotnet_diagnostic.IDE0051.severity = warning
+dotnet_diagnostic.IDE0055.severity = warning
+dotnet_diagnostic.IDE0059.severity = warning
+dotnet_diagnostic.IDE0060.severity = warning
+dotnet_diagnostic.IDE0071.severity = warning
+dotnet_diagnostic.IDE0090.severity = warning
+dotnet_diagnostic.IDE0160.severity = warning
+dotnet_diagnostic.IDE0161.severity = warning
+
+# .NET analyzer performance / quality rules.
+# These only work when the corresponding analyzer ships with / is enabled in the toolchain.
+dotnet_diagnostic.CA1805.severity = warning
+dotnet_diagnostic.CA1822.severity = warning
+dotnet_diagnostic.CA1840.severity = warning
+dotnet_diagnostic.CA1859.severity = warning
+
+# ------------------------------------------------------------
+# 7. Unity-specific guidance
+# .editorconfig cannot create Unity-specific rules by itself.
+# Keep Microsoft.Unity.Analyzers enabled separately.
+# ------------------------------------------------------------
+
+# ------------------------------------------------------------
+# 8. Generated files
+# ------------------------------------------------------------
+
+[*.g.cs]
+generated_code = true
+
+[*.generated.cs]
+generated_code = true
+
+[*.designer.cs]
+generated_code = true
+
+# ------------------------------------------------------------
+# 9. Test files
+# Keep the same code style for tests. If test code needs different
+# rules, add a separate section here rather than disabling all analysis.
+# ------------------------------------------------------------
